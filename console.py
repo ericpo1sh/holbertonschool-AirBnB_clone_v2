@@ -10,6 +10,7 @@ from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.review import Review
+from shlex import split
 
 
 class HBNBCommand(cmd.Cmd):
@@ -115,12 +116,22 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """ Create an object of any class"""
-        if not args:
+        line = split(args)
+        if len(args) == 0:
             print("** class name missing **")
             return
-        elif args not in HBNBCommand.classes:
+        elif args[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
+        else:
+            if len(args) > 1:
+                for i in range(1, len(args)):
+                    merge = args[i].split('=')
+                    if len(merge) == 2:
+                        merge[1] = merge[1].replace('_', ' ')
+                        try:
+                            setattr()
+
         new_instance = HBNBCommand.classes[args]()
         storage.save()
         print(new_instance.id)
@@ -129,7 +140,7 @@ class HBNBCommand(cmd.Cmd):
     def help_create(self):
         """ Help information for the create method """
         print("Creates a class of any type")
-        print("[Usage]: create <className>\n")
+        print("[Usage]: create <Class name> <param 1> <param 2> <param 3>\n")
 
     def do_show(self, args):
         """ Method to show an individual object """
@@ -187,7 +198,7 @@ class HBNBCommand(cmd.Cmd):
         key = c_name + "." + c_id
 
         try:
-            del(storage.all()[key])
+            del (storage.all()[key])
             storage.save()
         except KeyError:
             print("** no instance found **")
