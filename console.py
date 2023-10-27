@@ -10,7 +10,6 @@ from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.review import Review
-from shlex import split
 
 
 class HBNBCommand(cmd.Cmd):
@@ -20,16 +19,23 @@ class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) ' if sys.__stdin__.isatty() else ''
 
     classes = {
-               'BaseModel': BaseModel, 'User': User, 'Place': Place,
-               'State': State, 'City': City, 'Amenity': Amenity,
-               'Review': Review
-              }
+        'BaseModel': BaseModel,
+        'User': User,
+        'Place': Place,
+        'State': State,
+        'City': City,
+        'Amenity': Amenity,
+        'Review': Review
+    }
     dot_cmds = ['all', 'count', 'show', 'destroy', 'update']
     types = {
-             'number_rooms': int, 'number_bathrooms': int,
-             'max_guest': int, 'price_by_night': int,
-             'latitude': float, 'longitude': float
-            }
+        'number_rooms': int,
+        'number_bathrooms': int,
+        'max_guest': int,
+        'price_by_night': int,
+        'latitude': float,
+        'longitude': float
+    }
 
     def preloop(self):
         """Prints if isatty is false"""
@@ -82,7 +88,7 @@ class HBNBCommand(cmd.Cmd):
                         # _args = _args.replace('\"', '')
             line = ' '.join([_cmd, _cls, _id, _args])
 
-        except Exception as mess:
+        except Exception:
             pass
         finally:
             return line
@@ -114,9 +120,9 @@ class HBNBCommand(cmd.Cmd):
         """ Overrides the emptyline method of CMD """
         pass
 
-    def do_create(self, args):
+    def do_create(self, line):
         """ Create an object of any class"""
-        line = split(args)
+        args = line.split()
         if len(args) == 0:
             print("** class name missing **")
             return
@@ -129,8 +135,8 @@ class HBNBCommand(cmd.Cmd):
                     merge = args[i].split('=')
                     if len(merge) == 2:
                         merge[1] = merge[1].replace('_', ' ')
-                        try:
-                            setattr()
+                        # try:
+                        #     setattr()
 
         new_instance = HBNBCommand.classes[args]()
         storage.save()
