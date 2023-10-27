@@ -115,6 +115,8 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, line):
         """Create an object of any class"""
+        import re
+
         args = line.split()
         if not args:
             print("** class name missing **")
@@ -125,7 +127,25 @@ class HBNBCommand(cmd.Cmd):
                 print('** class doesn\'t exist **')
                 return
             else:
-                object = eval(class_name)()
+                kwargs = {}
+                for arg in args[1:]:
+                    separate = arg.partition('=')
+                    # print(f"These are args: {args}")
+                    # print(f"This is the sep: {separate}")
+                    attr_name = separate[0]
+                    attr_value = separate[2]
+                    if re.search(r"^(\-?\d*\.?\d*|\"\S+\")$", str(attr_value)):
+                        if re.search(r"^\"\S+\"$", attr_value):
+                            attr_value = str(attr_value.replace(
+                                '_',
+                                ' '
+                            )[1:-1])
+                        kwargs[attr_name] = attr_value
+                if kwargs:
+                    # print(f"le kwargs: {kwargs}")
+                    object = eval(class_name)(**kwargs)
+                else:
+                    object = eval(class_name)()
                 object.save()
                 print(object.id)
 
