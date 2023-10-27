@@ -65,78 +65,128 @@ Advanced syntax is implemented for the following commands:
 
     * update - Updates existing attributes an object based on class name and UUID
 
-<br>
-<br>
-<center> <h2>Examples</h2> </center>
-<h3>Primary Command Syntax</h3>
+# AirBnB Console :house:
+### Description :pen:
+ The AirBnB Console is a command-line interpreter created for the purpose of handling objects similar to those found on Airbnb. It offers an easy-to-use interface for performing actions like creating, viewing, modifying, and removing instances of different classes like BaseModel, User, State, City, Amenity, Place, and Review. The Console involves the development of a console-driven application meant for the management of objects like the ones found on Airbnb. The Console includes a range of capabilities, including instance creation, information presentation, attribute modification, and instance removal. All the data is serialized and deserialized to and from JSON files to ensure effective data management.
 
-###### Example 0: Create an object
-Usage: create <class_name>
+#
+
+### Features :pushpin:
+- Create Instances - Creates new object/instance of the BaseModel class and save them into a JSON file.
+- Display Information - The console lets you see in-depth information about specific objects/instances using their class name and ID.
+- Delete Instances - You can remove object/instances by providing their class name and ID, and the console will automatically save the changes to the JSON file.
+- List Instances - The console provides the option to list all object/instances or filter them by class name or ID.
+- Update Attributes - You can modify object/instance attributes by providing their class name, ID, the attribute name, and the new value and the console saves the changes to JSON.
+
+#
+
+### Installation! :file_folder:
+**REQUIREMENT: Make sure that you have a working terminal with [python3](https://realpython.com/installing-python/) or greater installed!**
+
+**Clone the repository; example below:**
+```
+root@user$ git clone https://github.com/ericpo1sh/holbertonschool-AirBnB_clone.git
+```
+**Then navigate to the projects root directory and run console.py; example below:**
+```
+holbertonschool-AirBnB_clone$ ./console.py
+```
+**The application should be running and the following promp should display:**
+```
+(hbnb)
+```
+#
+
+#### Command Usage, Syntax, Descriptions :blue_book:
+
+| Syntax | Description |
+| -------| ----------- |
+| `create <class_name>` | Creates new object/instance of the BaseModel class and save them into a JSON file. |
+| `show <class_name> <id>` | See information about specific objects/instances using their class name and ID. |
+| `destroy <class_name> <id>` | Destroy object/instances with class name and ID. |
+| `all` ***or*** `all <class_name>` | Prints string representation of all instances or all instances of a specific class. |
+| `update <class_name> <id> <atr_name> <atr_value>` | Update a specific instance and add a attribute name and value. |
+| `clear` | Clear the screen. |
+| `quit` | Exit the program. |
+#
+
+### List of availiable Classes :round_pushpin:
+- BaseModel
+- User
+- State
+- City
+- Amenity
+- Place
+- Review
+
+#
+
+### Examples! :bulb:
+**In this example, we create a new instance of BaseModel, a new ID is returned.**
+
 ```
 (hbnb) create BaseModel
+ab763e7e-4bc8-4380-bb07-0a07a8f1a56d
 ```
+**Now lets use the show command on this newly created instance.**
+```
+(hbnb) show BaseModel ab763e7e-4bc8-4380-bb07-0a07a8f1a56d
+[BaseModel] (ab763e7e-4bc8-4380-bb07-0a07a8f1a56d) {'id': 'ab763e7e-4bc8-4380-bb07-0a07a8f1a56d',
+'created_at': datetime.datetime(2023, 10, 9, 10, 38, 1, 900183),
+'updated_at': datetime.datetime(2023, 10, 9, 10, 38, 1, 900224)}
+```
+**Now lets update the instance and add a new object to it.**
+```
+(hbnb) update BaseModel ab763e7e-4bc8-4380-bb07-0a07a8f1a56d Name "Eric"
+(hbnb) show BaseModel ab763e7e-4bc8-4380-bb07-0a07a8f1a56d
+[BaseModel] (ab763e7e-4bc8-4380-bb07-0a07a8f1a56d) {'id': 'ab763e7e-4bc8-4380-bb07-0a07a8f1a56d',
+'created_at': datetime.datetime(2023, 10, 9, 10, 38, 1, 900183),
+'updated_at': datetime.datetime(2023, 10, 9, 11, 3, 0, 44871),
+'Name': 'Eric'}
+```
+**Now lets use the all command to display any instance of any Class!**
 ```
 (hbnb) create BaseModel
-3aa5babc-efb6-4041-bfe9-3cc9727588f8
-(hbnb)                   
+a8259ae7-2ecb-4fb9-aafc-0e4244adf089
+(hbnb) create User
+2e2244f0-4f38-4c5e-9ecd-fe3f452bf7b8
+(hbnb) create Place
+af95611c-9ab1-459d-809c-f371eac2a5ef
+(hbnb) all
+[BaseModel] (a8259ae7-2ecb-4fb9-aafc-0e4244adf089) {'id': 'a8259ae7-2ecb-4fb9-aafc-0e4244adf089',
+'created_at': datetime.datetime(2023, 10, 9, 11, 43, 8, 384959),
+'updated_at': datetime.datetime(2023, 10, 9, 11, 43, 8, 384984)}
+[User] (2e2244f0-4f38-4c5e-9ecd-fe3f452bf7b8) {'id': '2e2244f0-4f38-4c5e-9ecd-fe3f452bf7b8',
+'created_at': datetime.datetime(2023, 10, 9, 11, 43, 11, 498325),
+'updated_at': datetime.datetime(2023, 10, 9, 11, 43, 11, 498340)}
+[Place] (af95611c-9ab1-459d-809c-f371eac2a5ef) {'id': 'af95611c-9ab1-459d-809c-f371eac2a5ef',
+'created_at': datetime.datetime(2023, 10, 9, 11, 43, 14, 199276),
+'updated_at': datetime.datetime(2023, 10, 9, 11, 43, 14, 199337)}
+(hbnb) 
 ```
-###### Example 1: Show an object
-Usage: show <class_name> <_id>
 
+**Now lets destroy the instance!**
 ```
-(hbnb) show BaseModel 3aa5babc-efb6-4041-bfe9-3cc9727588f8
-[BaseModel] (3aa5babc-efb6-4041-bfe9-3cc9727588f8) {'id': '3aa5babc-efb6-4041-bfe9-3cc9727588f8', 'created_at': datetime.datetime(2020, 2, 18, 14, 21, 12, 96959), 
-'updated_at': datetime.datetime(2020, 2, 18, 14, 21, 12, 96971)}
-(hbnb)  
-```
-###### Example 2: Destroy an object
-Usage: destroy <class_name> <_id>
-```
-(hbnb) destroy BaseModel 3aa5babc-efb6-4041-bfe9-3cc9727588f8
-(hbnb) show BaseModel 3aa5babc-efb6-4041-bfe9-3cc9727588f8
+(hbnb) destroy BaseModel ab763e7e-4bc8-4380-bb07-0a07a8f1a56d
+(hbnb) show BaseModel ab763e7e-4bc8-4380-bb07-0a07a8f1a56d
 ** no instance found **
-(hbnb)   
 ```
-###### Example 3: Update an object
-Usage: update <class_name> <_id>
+#
+# To Run Unittests, you can do the following! :test_tube:
 ```
-(hbnb) update BaseModel b405fc64-9724-498f-b405-e4071c3d857f first_name "person"
-(hbnb) show BaseModel b405fc64-9724-498f-b405-e4071c3d857f
-[BaseModel] (b405fc64-9724-498f-b405-e4071c3d857f) {'id': 'b405fc64-9724-498f-b405-e4071c3d857f', 'created_at': datetime.datetime(2020, 2, 18, 14, 33, 45, 729889), 
-'updated_at': datetime.datetime(2020, 2, 18, 14, 33, 45, 729907), 'first_name': 'person'}
-(hbnb)
-```
-<h3>Alternative Syntax</h3>
+root@user:~/AirBnB$ python3 -m unittest discover tests
+................................................
+----------------------------------------------------------------------
+Ran 48 tests in 0.232s
 
-###### Example 0: Show all User objects
-Usage: <class_name>.all()
+OK
+root@user:~/AirBnB$
 ```
-(hbnb) User.all()
-["[User] (99f45908-1d17-46d1-9dd2-b7571128115b) {'updated_at': datetime.datetime(2020, 2, 19, 21, 47, 34, 92071), 'id': '99f45908-1d17-46d1-9dd2-b7571128115b', 'created_at': datetime.datetime(2020, 2, 19, 21, 47, 34, 92056)}", "[User] (98bea5de-9cb0-4d78-8a9d-c4de03521c30) {'updated_at': datetime.datetime(2020, 2, 19, 21, 47, 29, 134362), 'id': '98bea5de-9cb0-4d78-8a9d-c4de03521c30', 'created_at': datetime.datetime(2020, 2, 19, 21, 47, 29, 134343)}"]
-```
-
-###### Example 1: Destroy a User
-Usage: <class_name>.destroy(<_id>)
-```
-(hbnb) User.destroy("99f45908-1d17-46d1-9dd2-b7571128115b")
-(hbnb)
-(hbnb) User.all()
-(hbnb) ["[User] (98bea5de-9cb0-4d78-8a9d-c4de03521c30) {'updated_at': datetime.datetime(2020, 2, 19, 21, 47, 29, 134362), 'id': '98bea5de-9cb0-4d78-8a9d-c4de03521c30', 'created_at': datetime.datetime(2020, 2, 19, 21, 47, 29, 134343)}"]
-```
-###### Example 2: Update User (by attribute)
-Usage: <class_name>.update(<_id>, <attribute_name>, <attribute_value>)
-```
-(hbnb) User.update("98bea5de-9cb0-4d78-8a9d-c4de03521c30", name "Todd the Toad")
-(hbnb)
-(hbnb) User.all()
-(hbnb) ["[User] (98bea5de-9cb0-4d78-8a9d-c4de03521c30) {'updated_at': datetime.datetime(2020, 2, 19, 21, 47, 29, 134362), 'id': '98bea5de-9cb0-4d78-8a9d-c4de03521c30', 'name': 'Todd the Toad', 'created_at': datetime.datetime(2020, 2, 19, 21, 47, 29, 134343)}"]
-```
-###### Example 3: Update User (by dictionary)
-Usage: <class_name>.update(<_id>, <dictionary>)
-```
-(hbnb) User.update("98bea5de-9cb0-4d78-8a9d-c4de03521c30", {'name': 'Fred the Frog', 'age': 9})
-(hbnb)
-(hbnb) User.all()
-(hbnb) ["[User] (98bea5de-9cb0-4d78-8a9d-c4de03521c30) {'updated_at': datetime.datetime(2020, 2, 19, 21, 47, 29, 134362), 'name': 'Fred the Frog', 'age': 9, 'id': '98bea5de-9cb0-4d78-8a9d-c4de03521c30', 'created_at': datetime.datetime(2020, 2, 19, 21, 47, 29, 134343)}"]
-```
-<br>
+#
+![image](https://github.com/ericpo1sh/holbertonschool-AirBnB_clone/assets/126730794/e82771fe-bb0a-44b1-935c-99efbf0877d3)
+## Authors/Contact info :phone: :mailbox:
+* **Eric Dzyk** **|** [Github](https://github.com/ericpo1sh) **|** [LinkedIn](https://linkedin.com/in/eric-dzyk-1b8976213) **|** [Email](mailto:ericpo1sh@gmail.com)  
+* **Sammy Ansari** **|** [Github](https://github.com/O-01) **|** [LinkedIn](https://linkedin.com/in/sam-ansari-579553287) **|** [Email](mailto:na.01goli@gmail.com)
+##
+![Holberton School - School of Computer Science and Programming](https://uploads-ssl.webflow.com/6105315644a26f77912a1ada/63eea844ae4e3022154e2878_Holberton.png)
+##
