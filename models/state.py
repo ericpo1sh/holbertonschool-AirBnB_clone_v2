@@ -17,13 +17,13 @@ class State(BaseModel, Base):
             backref="state",
             cascade="delete"
         )
-    else:
+    elif getenv("HBNB_TYPE_STORAGE") == "file":
         @property
         def cities(self):
             """returns list of City instances upon state_id"""
             from models import storage
             cities_list = []
-            for obj in storage.all(City).values():
+            for obj in list(storage.all(City).values()):
                 if obj.state_id == self.id:
                     cities_list.append(obj)
             return cities_list

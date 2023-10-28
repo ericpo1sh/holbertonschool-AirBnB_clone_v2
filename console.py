@@ -104,10 +104,18 @@ class HBNBCommand(cmd.Cmd):
         """Quit command to exit the program"""
         return True
 
+    def help_quit(self):
+        """ Prints the help documentation for quit  """
+        print("Exits the program with formatting\n")
+
     def do_EOF(self, *line):
         """Quits upon receiving EOF as input"""
         print()
-        return True
+        exit()
+
+    def help_EOF(self):
+        """ Prints the help documentation for EOF """
+        print("Exits the program without formatting\n")
 
     def emptyline(self):
         """If line is empty, do nothing"""
@@ -146,8 +154,8 @@ class HBNBCommand(cmd.Cmd):
                     object = eval(class_name)(**kwargs)
                 else:
                     object = eval(class_name)()
-                object.save()
                 print(object.id)
+                object.save()
 
     def help_create(self):
         """ Help information for the create method """
@@ -211,7 +219,7 @@ class HBNBCommand(cmd.Cmd):
         print("Destroys an individual instance of a class")
         print("[Usage]: destroy <className> <objectId>\n")
 
-    def do_all(self, line):
+    def do_all(self, line=None):
         """Prints string representation of all instances based on class"""
         args = line.split()
         if args:
@@ -341,7 +349,7 @@ class HBNBCommand(cmd.Cmd):
 
 
 def signal_thing(sig, frame):
-    print('\nGOING SOMEWHERE?\n(hbnb) ', end='')
+    print('\nWHERE ARE YOU GOING? ;_;\n(hbnb) ', end='')
     return
 
 
