@@ -9,7 +9,8 @@ from models.review import Review
 from models.amenity import Amenity
 from models.base_model import BaseModel, Base
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, scoped_session
+from sqlalchemy.orm import scoped_session
+from sqlalchemy.orm import sessionmaker
 
 classes = {
     'BaseModel': BaseModel,
@@ -29,7 +30,7 @@ class DBStorage:
 
     def __init__(self):
         self.__engine = create_engine(
-            'mysql+mysqldb://{}:{}@{}:3306/{}'.format(
+            'mysql+mysqldb://{}:{}@{}/{}'.format(
                 getenv('HBNB_MYSQL_USER'),
                 getenv('HBNB_MYSQL_PWD'),
                 getenv('HBNB_MYSQL_HOST'),
