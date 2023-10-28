@@ -48,11 +48,12 @@ class DBStorage:
                 cls = eval(cls)
             obj_query = self.__session.query(cls).all()
         else:
-            obj_query = []
-            for key, value in classes.items():
-                obj_class = self.__session.query(value).all()
-                for obj in obj_class:
-                    obj_query.append(obj)
+            obj_query = self.__session.query(State).all()
+            obj_query.extend(self.__session.query(City).all())
+            obj_query.extend(self.__session.query(User).all())
+            obj_query.extend(self.__session.query(Place).all())
+            obj_query.extend(self.__session.query(Review).all())
+            obj_query.extend(self.__session.query(Amenity).all())
         obj_dict = {}
         for obj in obj_query:
             obj_dict[f'{obj.__class__.__name__}.{obj.id}'] = obj
