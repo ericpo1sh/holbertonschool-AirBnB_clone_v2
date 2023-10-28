@@ -32,9 +32,9 @@ class BaseModel:
                 self.created_at = datetime.now()
                 self.updated_at = self.created_at
             self.__dict__.update(kwargs)
-            for key, value in kwargs.items():
-                if not hasattr(self, key):
-                    setattr(self, key, value)
+            # for key, value in kwargs.items():
+            #     if not hasattr(self, key):
+            #         setattr(self, key, value)
         else:
             self.id = str(uuid4())
             self.created_at = datetime.now()
@@ -42,7 +42,8 @@ class BaseModel:
 
     def __str__(self):
         """string representation of BaseModel object"""
-        return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
+        cls = (str(type(self)).split('.')[-1]).split('\'')[0]
+        return '[{}] ({}) {}'.format(cls, self.id, self.__dict__)
 
     def delete(self):
         """delete current instance from FileStorage"""
