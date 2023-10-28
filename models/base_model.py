@@ -37,9 +37,9 @@ class BaseModel:
             self.id = str(uuid4())
             self.created_at = datetime.now()
             self.updated_at = self.created_at
-        for key, value in kwargs.items():
-            if not hasattr(self, key):
-                setattr(self, key, value)
+        # for key, value in kwargs.items():
+        #     if not hasattr(self, key):
+        #         setattr(self, key, value)
 
     def __str__(self):
         """string representation of BaseModel object"""
@@ -57,12 +57,13 @@ class BaseModel:
 
     def to_dict(self):
         """returns __dict__ keys & values of BaseModel instance"""
-        inst_dict = self.__dict__.copy()
-        inst_dict.update({
-            'created_at': datetime.isoformat(self.created_at),
-            'updated_at': datetime.isoformat(self.updated_at),
-            '__class__': self.__class__.__name__
+        dictionary = {}
+        dictionary.update(self.__dict__)
+        dictionary.update({
+            '__class__': (str(type(self)).split('.')[-1]).split('\'')[0]
         })
-        if '_sa_instance_state' in inst_dict:
-            del inst_dict['_sa_instance_state']
-        return inst_dict
+        dictionary['created_at'] = self.created_at.isoformat()
+        dictionary['updated_at'] = self.updated_at.isoformat()
+        if '_sa_instance_state' in dictionary.keys():
+            dictionary.pop('_sa_instance_state')
+        return dictionary

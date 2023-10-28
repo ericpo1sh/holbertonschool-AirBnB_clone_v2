@@ -39,6 +39,7 @@ class DBStorage:
             ),
             pool_pre_ping=True
         )
+        Base.metadata.create_all(self.__engine)
         if getenv("HBNB_ENV") == "test":
             Base.metadata.drop_all(self.__engine)
 
@@ -46,7 +47,7 @@ class DBStorage:
         """query all objects - specific to cls var, if supplied"""
         obj_dict = {}
         if cls:
-            obj_query = self.__session.query(cls)
+            obj_query = self.__session.query(cls).all()
         else:
             obj_query = self.__session.query(
                 City,
@@ -76,10 +77,13 @@ class DBStorage:
     def reload(self):
         """create tables and database session"""
         Base.metadata.create_all(self.__engine)
-        sessssion = sessionmaker(bind=self.__engine, expire_on_commit=False)
-        Session = scoped_session(sessssion)
+        session_factory = sessionmaker(
+            bind=self.__engine,
+            expire_on_commit=False
+        )
+        Session = scoped_session(session_factory)
         self.__session = Session()
 
     def close(self):
         """close session"""
-        self.__session.close()
+        self.__session.remove()
