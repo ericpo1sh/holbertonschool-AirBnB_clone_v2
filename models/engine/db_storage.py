@@ -46,7 +46,7 @@ class DBStorage:
         if cls:
             if type(cls) is str:
                 cls = eval(cls)
-            obj_query = self.__session.query(cls).all()
+            obj_query = self.__session.query(cls)
         else:
             obj_query = []
             for key, value in classes.items():
