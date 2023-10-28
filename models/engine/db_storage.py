@@ -46,13 +46,13 @@ class DBStorage:
     def all(self, cls=None):
         """query all objects - specific to cls var, if supplied"""
         if cls:
-            obj_query = list(self.__session.query(cls).all())
+            obj_query = self.__session.query(cls).all()
         else:
-            obj_list = []
+            obj_query = []
             for key, value in classes.items():
                 obj_class = self.__session.query(value).all()
                 for obj in obj_class:
-                    obj_list.append(obj)
+                    obj_query.append(obj)
         obj_dict = {}
         for obj in obj_query:
             obj_dict[f'{obj.__class__.__name__}.{obj.id}'] = obj
