@@ -10,17 +10,12 @@ from sqlalchemy.orm import relationship
 
 class State(BaseModel, Base):
     """ State class """
-    if getenv("HBNB_TYPE_STORAGE") == "db":
-        __tablename__ = 'states'
-        name = Column(String(128), nullable=False)
-        cities = relationship(
-            "City",
-            cascade="all, delete-orphan",
-            backref="state"
-        )
-    if getenv("HBNB_TYPE_STORAGE") == "file":
-        name = ""
+    __tablename__ = 'states'
+    name = Column(String(128), nullable=False)
 
+    if getenv("HBNB_TYPE_STORAGE") == "db":
+        cities = relationship("City", cascade="delete", backref="state")
+    if getenv("HBNB_TYPE_STORAGE") == "file":
         @property
         def cities(self):
             """returns list of City instances upon state_id"""
