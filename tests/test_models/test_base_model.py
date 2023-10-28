@@ -7,7 +7,7 @@ import json
 import os
 
 
-class test_basemodel(unittest.TestCase):
+class Test_BaseModel(unittest.TestCase):
     """ """
 
     def __init__(self, *args, **kwargs):
