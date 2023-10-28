@@ -7,13 +7,12 @@ from models.place import Place
 from models.state import State
 from models.review import Review
 from models.amenity import Amenity
-from models.base_model import BaseModel, Base
+from models.base_model import Base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session
 from sqlalchemy.orm import sessionmaker
 
 classes = {
-    'BaseModel': BaseModel,
     'User': User,
     'Place': Place,
     'State': State,
@@ -45,6 +44,8 @@ class DBStorage:
     def all(self, cls=None):
         """query all objects - specific to cls var, if supplied"""
         if cls:
+            if type(cls) is str:
+                cls = eval(cls)
             obj_query = self.__session.query(cls).all()
         else:
             obj_query = []
@@ -82,4 +83,4 @@ class DBStorage:
 
     def close(self):
         """close session"""
-        self.__session.remove()
+        self.__session.close()
