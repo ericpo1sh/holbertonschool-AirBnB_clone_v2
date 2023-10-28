@@ -32,13 +32,13 @@ class BaseModel:
                 self.created_at = datetime.now()
                 self.updated_at = self.created_at
             self.__dict__.update(kwargs)
+            for key, value in kwargs.items():
+                if not hasattr(self, key):
+                    setattr(self, key, value)
         else:
             self.id = str(uuid4())
             self.created_at = datetime.now()
             self.updated_at = self.created_at
-        # for key, value in kwargs.items():
-        #     if not hasattr(self, key):
-        #         setattr(self, key, value)
 
     def __str__(self):
         """string representation of BaseModel object"""
