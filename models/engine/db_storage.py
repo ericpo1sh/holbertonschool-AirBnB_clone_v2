@@ -39,7 +39,6 @@ class DBStorage:
             ),
             pool_pre_ping=True
         )
-        Base.metadata.create_all(self.__engine)
         if getenv("HBNB_ENV") == "test":
             Base.metadata.drop_all(self.__engine)
 
