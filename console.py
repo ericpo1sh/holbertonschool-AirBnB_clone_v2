@@ -102,7 +102,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_quit(self, command):
         """Quit command to exit the program"""
-        return True
+        exit()
 
     def help_quit(self):
         """ Prints the help documentation for quit  """
@@ -149,94 +149,97 @@ class HBNBCommand(cmd.Cmd):
                                 ' '
                             )[1:-1])
                         kwargs[attr_name] = attr_value
-                if kwargs:
-                    # print(f"le kwargs: {kwargs}")
-                    object = eval(class_name)(**kwargs)
-                else:
-                    object = eval(class_name)()
-                print(object.id)
+                object = eval(class_name)(**kwargs)
                 object.save()
+                print(object.id)
 
     def help_create(self):
         """ Help information for the create method """
         print("Creates a class of any type")
         print("[Usage]: create <Class name> <param 1> <param 2> <param 3>\n")
 
-    def do_show(self, line):
-        """Prints string representation of instance based on class name"""
-        args = line.split()
-        if not args:
-            print('** class name missing **')
+    def do_show(self, args):
+        """ Method to show an individual object """
+        new = args.partition(" ")
+        c_name = new[0]
+        c_id = new[2]
+
+        # guard against trailing args
+        if c_id and ' ' in c_id:
+            c_id = c_id.partition(' ')[0]
+
+        if not c_name:
+            print("** class name missing **")
             return
-        else:
-            class_name = line.split()[0]
-            if class_name not in self.classes.keys():
-                print('** class doesn\'t exist **')
-                return
-            elif len(args) < 2:
-                print('** instance id missing **')
-                return
-            else:
-                obj_id = args[1]
-                obj_dict = storage.all()
-                obj_key = f'{class_name}.{obj_id}'
-                if obj_key not in obj_dict:
-                    print('** no instance found **')
-                    return
-                print(obj_dict[obj_key])
+
+        if c_name not in HBNBCommand.classes:
+            print("** class doesn't exist **")
+            return
+
+        if not c_id:
+            print("** instance id missing **")
+            return
+
+        key = c_name + "." + c_id
+        try:
+            print(storage._FileStorage__objects[key])
+        except KeyError:
+            print("** no instance found **")
 
     def help_show(self):
         """ Help information for the show command """
         print("Shows an individual instance of a class")
         print("[Usage]: show <className> <objectId>\n")
 
-    def do_destroy(self, line):
-        """Deletes an instance based on the class name and id"""
-        args = line.split()
-        if not args:
-            print('** class name missing **')
+    def do_destroy(self, args):
+        """ Destroys a specified object """
+        new = args.partition(" ")
+        c_name = new[0]
+        c_id = new[2]
+        if c_id and ' ' in c_id:
+            c_id = c_id.partition(' ')[0]
+
+        if not c_name:
+            print("** class name missing **")
             return
-        else:
-            class_name = args[0]
-            if class_name not in self.classes.keys():
-                print('** class doesn\'t exist **')
-                return
-            elif len(args) < 2:
-                print('** instance id missing **')
-                return
-            else:
-                obj_id = args[1]
-                obj_dict = storage.all()
-                obj_key = f'{class_name}.{obj_id}'
-                if obj_key not in obj_dict:
-                    print('** no instance found **')
-                    return
-                del obj_dict[obj_key]
-                storage.save()
+
+        if c_name not in HBNBCommand.classes:
+            print("** class doesn't exist **")
+            return
+
+        if not c_id:
+            print("** instance id missing **")
+            return
+
+        key = c_name + "." + c_id
+
+        try:
+            del (storage.all()[key])
+            storage.save()
+        except KeyError:
+            print("** no instance found **")
 
     def help_destroy(self):
         """ Help information for the destroy command """
         print("Destroys an individual instance of a class")
         print("[Usage]: destroy <className> <objectId>\n")
 
-    def do_all(self, line=None):
-        """Prints string representation of all instances based on class"""
-        args = line.split()
+    def do_all(self, args):
+        """ Shows all objects, or all objects of a class"""
+        print_list = []
+
         if args:
-            class_name = args[0]
-            if class_name not in self.classes.keys():
-                print('** class doesn\'t exist **')
+            args = args.split(' ')[0]  # remove possible trailing args
+            if args not in HBNBCommand.classes:
+                print("** class doesn't exist **")
                 return
-            else:
-                obj_dict = storage.all()
-                obj_list = []
-                for key, value in obj_dict.items():
-                    if key.split(".")[0] == class_name:
-                        obj_list.append(value)
+            for k, v in storage.all(HBNBCommand.classes.get(args)).items():
+                print_list.append(str(v))
         else:
-            obj_list = storage.all().values()
-        for obj in obj_list:
-            print(str(obj))
+            for k, v in storage.all().items():
+                print_list.append(str(v))
+
+        print(print_list)
 
     def help_all(self):
         """ Help information for the all command """
