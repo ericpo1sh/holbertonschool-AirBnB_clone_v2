@@ -25,7 +25,7 @@ class BaseModel:
                 if key in ["created_at", "updated_at"]:
                     value = datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f')
                 if key != '__class__':
-                    setattr(self, key, value)
+                    self.__dict__[key] = value
 
     def __str__(self):
         """string representation of BaseModel object"""

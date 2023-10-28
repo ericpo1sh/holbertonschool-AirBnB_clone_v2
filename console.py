@@ -154,8 +154,8 @@ class HBNBCommand(cmd.Cmd):
                     object = eval(class_name)(**kwargs)
                 else:
                     object = eval(class_name)()
-                print(object.id)
                 object.save()
+                print(object.id)
 
     def help_create(self):
         """ Help information for the create method """
