@@ -46,7 +46,7 @@ class BaseModel:
 
     def delete(self):
         """delete current instance from FileStorage"""
-        from models.__init__ import storage
+        from models import storage
         storage.delete(self)
 
     def save(self):

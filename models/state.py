@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 """ State Module for HBNB project """
-import models
 from os import getenv
 from models.city import City
 from models.base_model import BaseModel, Base
@@ -16,14 +15,15 @@ class State(BaseModel, Base):
         cities = relationship(
             "City",
             backref="state",
-            cascade="all, delete-orphan"
+            cascade="delete"
         )
     else:
         @property
         def cities(self):
             """returns list of City instances upon state_id"""
+            from models import storage
             cities_list = []
-            for obj in models.storage.all(City).values():
+            for obj in storage.all(City).values():
                 if obj.state_id == self.id:
                     cities_list.append(obj)
             return cities_list
