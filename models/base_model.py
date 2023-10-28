@@ -21,11 +21,24 @@ class BaseModel:
         self.created_at = datetime.now()
         self.updated_at = self.created_at
         if kwargs and len(kwargs) > 0:
-            for key, value in kwargs.items():
-                if key in ["created_at", "updated_at"]:
-                    value = datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f')
-                if key != '__class__':
-                    self.__dict__[key] = value
+            if 'id' not in kwargs.keys():
+                self.id = str(uuid4())
+            if '__class__' in kwargs.keys():
+                del kwargs['__class__']
+            if "created_at" in kwargs.keys() and "updated_at" in kwargs.keys():
+                kwargs['created_at'] = datetime.strptime(
+                    kwargs['created_at'], '%Y-%m-%dT%H:%M:%S.%f'
+                )
+                kwargs['updated_at'] = datetime.strptime(
+                    kwargs['updated_at'], '%Y-%m-%dT%H:%M:%S.%f'
+                )
+            else:
+                self.created_at = datetime.now()
+                self.updated_at = self.created_at
+            self.__dict__.update(kwargs)
+            # for key, value in kwargs.items():
+            #     if not hasattr(self, key):
+            #         setattr(self, key, value)
 
     def __str__(self):
         """string representation of BaseModel object"""
