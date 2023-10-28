@@ -1,12 +1,30 @@
 #!/usr/bin/python3
 """This module defines a base class for all models in our hbnb clone"""
 import models
+from os import getenv
 from uuid import uuid4
 from datetime import datetime
+from sqlalchemy import Column, DateTime, String
+from sqlalchemy.ext.declarative import declarative_base
+
+Base = declarative_base()
 
 
 class BaseModel:
     """A base class for all hbnb models"""
+    if getenv("HBNB_TYPE_STORAGE") == 'db':
+        id = Column(String(60), nullable=False, primary_key=True, unique=True)
+        created_at = Column(
+            DateTime,
+            nullable=False,
+            default=datetime.utcnow()
+        )
+        updated_at = Column(
+            DateTime,
+            nullable=False,
+            default=datetime.utcnow()
+        )
+
     def __init__(self, *args, **kwargs):
         """Instantiation of BaseModel object"""
         if kwargs and len(kwargs) > 0:
@@ -29,15 +47,19 @@ class BaseModel:
             self.id = str(uuid4())
             self.created_at = datetime.now()
             self.updated_at = self.created_at
-        models.storage.new(self)
 
     def __str__(self):
         """string representation of BaseModel object"""
         return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
 
+    def delete(self):
+        """delete current instance from FileStorage"""
+        models.storage.delete(self)
+
     def save(self):
         """updates updated_at attribute with current datetime"""
         self.updated_at = datetime.now()
+        models.storage.new(self)
         models.storage.save()
 
     def to_dict(self):
@@ -48,4 +70,6 @@ class BaseModel:
             'updated_at': datetime.isoformat(self.updated_at),
             '__class__': self.__class__.__name__
         })
+        if '_sa_instance_state' in inst_dict:
+            del inst_dict['_sa_instance_state']
         return inst_dict
