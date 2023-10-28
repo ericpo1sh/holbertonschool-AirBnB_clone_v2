@@ -29,23 +29,24 @@ class DBStorage:
     __session = None
 
     def __init__(self):
+        """instantiation of DBStorage engine"""
         self.__engine = create_engine(
-            'mysql+mysqldb://{}:{}@{}/{}'.format(
-                getenv('HBNB_MYSQL_USER'),
-                getenv('HBNB_MYSQL_PWD'),
-                getenv('HBNB_MYSQL_HOST'),
-                getenv('HBNB_MYSQL_DB')
+            "mysql+mysqldb://{}:{}@{}/{}".format(
+                getenv("HBNB_MYSQL_USER"),
+                getenv("HBNB_MYSQL_PWD"),
+                getenv("HBNB_MYSQL_HOST"),
+                getenv("HBNB_MYSQL_DB")
             ),
             pool_pre_ping=True
         )
-        if getenv('HBNB_ENV') == 'test':
+        if getenv("HBNB_ENV") == "test":
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
         """query all objects - specific to cls var, if supplied"""
         obj_dict = {}
         if cls:
-            obj_query = self.__session.query(cls).all()
+            obj_query = self.__session.query(cls)
         else:
             obj_query = self.__session.query(
                 City,
@@ -56,9 +57,7 @@ class DBStorage:
                 Amenity
             ).all()
         for obj in obj_query:
-            obj_dict.update({
-                    f'{obj.__class__.__name__}.{obj.id}': obj
-            })
+            obj_dict[f'{obj.__class__.__name__}.{obj.id}'] = obj
         return obj_dict
 
     def new(self, obj):
@@ -75,8 +74,12 @@ class DBStorage:
             self.__session.delete(obj)
 
     def reload(self):
-        """ """
+        """create tables and database session"""
         Base.metadata.create_all(self.__engine)
         sessssion = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(sessssion)
         self.__session = Session()
+
+    def close(self):
+        """close session"""
+        self.__session.close()
