@@ -6,7 +6,7 @@ from sqlalchemy import Column, Float, ForeignKey, Integer, String
 
 class Place(BaseModel, Base):
     """A place to stay"""
-    __tablename__ = "users"
+    __tablename__ = "places"
     city_id = Column(String(60), ForeignKey("cities.id"), nullable=False)
     user_id = Column(String(60), ForeignKey("users.id"), nullable=False)
     name = Column(String(128), nullable=False)
