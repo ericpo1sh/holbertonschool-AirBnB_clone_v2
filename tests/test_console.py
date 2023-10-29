@@ -13,11 +13,11 @@ class Test(unittest.TestCase):
         sys.stdout = output
         console = HBNBCommand()
         console.onecmd(
-            "create User email=\"test\" password=\"kittycat\" id=\"2\""
+            "create User email=\"test\" password=\"kittycat\" id=\"12\""
         )
         sys.stdout = sys.__stdout__
         expected_output = output.getvalue()
-        self.assertIn('2', expected_output)
+        self.assertIn('12', expected_output)
 
 
 if __name__ == "__main__":

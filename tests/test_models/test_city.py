@@ -1,15 +1,17 @@
 #!/usr/bin/python3
 """ """
+import os
 import MySQLdb
+import unittest
 import subprocess
-from os import getenv
+import pycodestyle
+from models import storage
 from models.city import City
-from tests.test_models.test_base_model import Test_BaseModel
 
 
-class Test_City(Test_BaseModel):
+class Test_City(unittest.TestCase):
     """ """
-    if getenv("HBNB_TYPE_STORAGE") == "db":
+    if os.getenv("HBNB_TYPE_STORAGE") == "db":
         def test_state_id_db(self):
             """ """
             command = [
@@ -46,19 +48,54 @@ class Test_City(Test_BaseModel):
             count = result_after - result_before
             self.assertEqual(result_after - result_before, count)
 
-    if getenv("HBNB_TYPE_STORAGE") != "db":
-        def __init__(self, *args, **kwargs):
-            """ """
-            super().__init__(*args, **kwargs)
-            self.name = "City"
-            self.value = City
+    if os.getenv("HBNB_TYPE_STORAGE") != "db":
+        @classmethod
+        def setUp(self):
+            """ preparation method to be performed before each test """
+            self.city1 = City()
+            self.city2 = City()
+            self.city3 = City(**self.city1.to_dict())
+            storage.save()
 
-        def test_state_id(self):
-            """ """
-            new = self.value()
-            self.assertEqual(type(new.state_id), str)
+        @classmethod
+        def tearDown(self):
+            """ cleanup method to be performed following each test """
+            del self.city1
+            del self.city2
+            del self.city3
+            try:
+                os.remove("file.json")
+            except IOError:
+                pass
 
-        def test_name(self):
-            """ """
-            new = self.value()
-            self.assertEqual(type(new.name), str)
+        def test_doc_string(self):
+            """ tests module docstring """
+            self.assertTrue(len(City.__doc__) > 0)
+
+        def test_pycodestyle(self):
+            """ tests module pycodestyle formatting standard compliance """
+            style = pycodestyle.StyleGuide(quiet=True)
+            self.assertEqual(
+                style.check_files(['models/city.py']).total_errors,
+                0,
+                "Found code style errors (and warnings)."
+            )
+
+        def test_class_attribute_initialization(self):
+            """ verifies attributes initialized with correct value & type """
+            self.assertTrue(type(self.city1.state_id) is str)
+            self.assertTrue(type(self.city1.name) is str)
+            self.assertTrue(type(self.city2.state_id) is str)
+            self.assertTrue(type(self.city2.name) is str)
+            self.assertTrue(type(self.city3.state_id) is str)
+            self.assertTrue(type(self.city3.name) is str)
+            self.assertEqual(self.city1.state_id, "")
+            self.assertEqual(self.city1.name, "")
+            self.assertEqual(self.city2.state_id, "")
+            self.assertEqual(self.city2.name, "")
+            self.assertEqual(self.city3.state_id, "")
+            self.assertEqual(self.city3.name, "")
+
+
+if __name__ == "__main__":
+    unittest.main()
