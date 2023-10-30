@@ -31,16 +31,16 @@ class FileStorage:
             if type(cls) is str:
                 cls = classes.get(cls)
             obj_dict = {}
-            for val in FileStorage.__objects.values():
-                if type(val) is cls:
-                    obj_dict[f"{val.to_dict()['__class__']}.{val.id}"] = val
+            for key, value in self.__objects.items():
+                if type(value) is cls:
+                    obj_dict[key] = value
             return obj_dict
         else:
             return FileStorage.__objects
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
-        self.all().update({f"{obj.to_dict()['__class__']}.{obj.id}": obj})
+        FileStorage.__objects[f"{obj.__class__.__name__}.{obj.id}"] = obj
 
     def save(self):
         """Serialization of __objects to JSON file at __file_path location"""
