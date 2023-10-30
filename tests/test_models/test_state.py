@@ -13,8 +13,8 @@ class Test_State(unittest.TestCase):
         @classmethod
         def setUp(self):
             """ preparation method to be performed before each test """
-            self.state1 = State()
-            self.state2 = State()
+            self.state1 = State(name="Texas")
+            self.state2 = State(name="New Jersey")
             self.state3 = State(**self.state1.to_dict())
             storage.save()
 
@@ -44,13 +44,9 @@ class Test_State(unittest.TestCase):
 
         def test_class_attribute_initialization(self):
             """ verifies attributes initialized with correct value & type """
-            self.assertTrue(type(self.state1.name) is str)
-            self.assertTrue(type(self.state2.name) is str)
-            self.assertTrue(type(self.state3.name) is str)
-            self.assertEqual(self.state1.name, "")
-            self.assertEqual(self.state2.name, "")
-            self.assertEqual(self.state3.name, "")
-
-
-if __name__ == "__main__":
-    unittest.main()
+            self.assertEqual(type(self.state1.name), str)
+            self.assertEqual(type(self.state2.name), str)
+            self.assertEqual(type(self.state3.name), str)
+            self.assertEqual(self.state1.name, "Texas")
+            self.assertEqual(self.state2.name, "New Jersey")
+            self.assertEqual(self.state3.name, "Texas")

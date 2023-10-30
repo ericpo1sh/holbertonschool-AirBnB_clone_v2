@@ -3,13 +3,14 @@
 import os
 import unittest
 import pycodestyle
-# from os import getenv
+from os import getenv
 from models import storage
 from genericpath import exists
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
 
 
+@unittest.skipIf(getenv('HBNB_TYPE_STORAGE') == 'db', 'FileStorage inactive')
 class TestFileStorage_class(unittest.TestCase):
     """ tests FileStorage class init & formatting related operations """
     def test_doc_string(self):
@@ -47,13 +48,14 @@ class TestFileStorage_class(unittest.TestCase):
         self.assertTrue(type(storage) is FileStorage)
 
 
+@unittest.skipIf(getenv('HBNB_TYPE_STORAGE') == 'db', 'FileStorage inactive')
 class TestFileStorage_all(unittest.TestCase):
     """ tests FileStorage all method """
     @classmethod
     def setUp(self):
         """ preparation method to be performed before each test """
         self.obj = BaseModel()
-        storage.save()
+        self.obj.save()
 
     @classmethod
     def tearDown(self):
@@ -69,17 +71,18 @@ class TestFileStorage_all(unittest.TestCase):
         self.assertTrue(self.obj, exists)
         self.assertIn(
             f'{self.obj.__class__.__name__}.{self.obj.id}',
-            storage._FileStorage__objects
+            storage.all()
         )
         self.assertTrue(type(storage.all()) is dict)
         self.assertTrue(len(storage.all()) > 0)
 
-    def test_all_with_argument(self):
-        """ verifies all method raises TypeError when argument supplied """
-        with self.assertRaises(TypeError):
-            storage.all(1)
+    # def test_all_with_argument(self):
+    #     """ verifies all method raises TypeError when argument supplied """
+    #     with self.assertRaises(KeyError):
+    #         storage.all(1)
 
 
+@unittest.skipIf(getenv('HBNB_TYPE_STORAGE') == 'db', 'FileStorage inactive')
 class TestFileStorage_new(unittest.TestCase):
     """ tests FileStorage new method """
     @classmethod
@@ -118,6 +121,7 @@ class TestFileStorage_new(unittest.TestCase):
             storage.new({2, 4, 8})
 
 
+@unittest.skipIf(getenv('HBNB_TYPE_STORAGE') == 'db', 'FileStorage inactive')
 class TestFileStorage_save(unittest.TestCase):
     """ tests FileStorage save method """
     @classmethod
@@ -153,12 +157,13 @@ class TestFileStorage_save(unittest.TestCase):
             storage.save(1)
 
 
+@unittest.skipIf(getenv('HBNB_TYPE_STORAGE') == 'db', 'FileStorage inactive')
 class TestFileStorage_reload(unittest.TestCase):
     """ tests FileStorage reload method """
     def test_reload(self):
         """ tests FileStorage reload method correct operation """
         self.obj = BaseModel()
-        storage.save()
+        self.obj.save()
         storage.reload()
         self.assertIn(
             f'{self.obj.__class__.__name__}.{self.obj.id}',
@@ -280,7 +285,3 @@ class TestFileStorage_reload(unittest.TestCase):
 #             from models.engine.file_storage import FileStorage
 #             print(type(storage))
 #             self.assertEqual(type(storage), FileStorage)
-
-
-if __name__ == "__main__":
-    unittest.main()

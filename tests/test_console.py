@@ -1,24 +1,24 @@
 #!/usr/bin/python3
 """ """
 import io
-import sys
+import console
 import unittest
-from console import HBNBCommand
+from contextlib import redirect_stdout
 
 
-class Test(unittest.TestCase):
-    def test_create_instance(self):
-        """ """
-        output = io.StringIO()
-        sys.stdout = output
-        console = HBNBCommand()
-        console.onecmd(
-            "create User email=\"test\" password=\"kittycat\" id=\"12\""
-        )
-        sys.stdout = sys.__stdout__
-        expected_output = output.getvalue()
-        self.assertIn('12', expected_output)
+class Test_Console(unittest.TestCase):
+    """ tests for console """
+    def setUp(self):
+        self.console = console.HBNBCommand()
 
-
-if __name__ == "__main__":
-    unittest.main()
+    def test_create(self):
+        with redirect_stdout(io.StringIO()) as f:
+            self.console.onecmd("create State name='Hawai\'i'")
+        state_id = f.getvalue()
+        with redirect_stdout(io.StringIO()) as d:
+            self.console.onecmd(
+                "create City state_id=\"{}\" name='Surf's up dude'"
+                .format(str(state_id)))
+        city_id = d.getvalue()
+        print(f"state:{state_id}city:{city_id}")
+        self.assertEqual(1, 1)

@@ -13,8 +13,18 @@ class Test_User(unittest.TestCase):
         @classmethod
         def setUp(self):
             """ preparation method to be performed before each test """
-            self.usr1 = User()
-            self.usr2 = User()
+            self.usr1 = User(
+                email="jfranco@gmail.com",
+                password="pwd",
+                first_name="James",
+                last_name="Franco"
+            )
+            self.usr2 = User(
+                email="mr305@worldwide.mr",
+                password="yatusabes",
+                first_name="Pitbull",
+                last_name="Mister Worldwide"
+            )
             self.usr3 = User(**self.usr1.to_dict())
             storage.save()
 
@@ -44,31 +54,27 @@ class Test_User(unittest.TestCase):
 
         def test_class_attribute_initialization(self):
             """ verifies attributes initialized with correct value & type """
-            self.assertTrue(type(self.usr1.email) is str)
-            self.assertTrue(type(self.usr1.password) is str)
-            self.assertTrue(type(self.usr1.first_name) is str)
-            self.assertTrue(type(self.usr1.last_name) is str)
-            self.assertTrue(type(self.usr2.email) is str)
-            self.assertTrue(type(self.usr2.password) is str)
-            self.assertTrue(type(self.usr2.first_name) is str)
-            self.assertTrue(type(self.usr2.last_name) is str)
-            self.assertTrue(type(self.usr3.email) is str)
-            self.assertTrue(type(self.usr3.password) is str)
-            self.assertTrue(type(self.usr3.first_name) is str)
-            self.assertTrue(type(self.usr3.last_name) is str)
-            self.assertEqual(self.usr1.email, "")
-            self.assertEqual(self.usr1.password, "")
-            self.assertEqual(self.usr1.first_name, "")
-            self.assertEqual(self.usr1.last_name, "")
-            self.assertEqual(self.usr2.email, "")
-            self.assertEqual(self.usr2.password, "")
-            self.assertEqual(self.usr2.first_name, "")
-            self.assertEqual(self.usr2.last_name, "")
-            self.assertEqual(self.usr3.email, "")
-            self.assertEqual(self.usr3.password, "")
-            self.assertEqual(self.usr3.first_name, "")
-            self.assertEqual(self.usr3.last_name, "")
-
-
-if __name__ == "__main__":
-    unittest.main()
+            self.assertEqual(type(self.usr1.email), str)
+            self.assertEqual(type(self.usr1.password), str)
+            self.assertEqual(type(self.usr1.first_name), str)
+            self.assertEqual(type(self.usr1.last_name), str)
+            self.assertEqual(type(self.usr2.email), str)
+            self.assertEqual(type(self.usr2.password), str)
+            self.assertEqual(type(self.usr2.first_name), str)
+            self.assertEqual(type(self.usr2.last_name), str)
+            self.assertEqual(type(self.usr3.email), str)
+            self.assertEqual(type(self.usr3.password), str)
+            self.assertEqual(type(self.usr3.first_name), str)
+            self.assertEqual(type(self.usr3.last_name), str)
+            self.assertEqual(self.usr1.email, "jfranco@gmail.com")
+            self.assertEqual(self.usr1.password, "pwd")
+            self.assertEqual(self.usr1.first_name, "James")
+            self.assertEqual(self.usr1.last_name, "Franco")
+            self.assertEqual(self.usr2.email, "mr305@worldwide.mr")
+            self.assertEqual(self.usr2.password, "yatusabes")
+            self.assertEqual(self.usr2.first_name, "Pitbull")
+            self.assertEqual(self.usr2.last_name, "Mister Worldwide")
+            self.assertEqual(self.usr3.email, "jfranco@gmail.com")
+            self.assertEqual(self.usr3.password, "pwd")
+            self.assertEqual(self.usr3.first_name, "James")
+            self.assertEqual(self.usr3.last_name, "Franco")

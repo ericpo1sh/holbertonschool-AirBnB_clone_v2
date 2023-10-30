@@ -5,7 +5,8 @@ from models.engine.db_storage import DBStorage
 
 
 class Test_DatabaseStorage(unittest.TestCase):
-    def test_all(self):
-        """ __objects properly returned """
+    """ tests for DBStorage """
+    def test_dbstorage(self):
         storage = DBStorage()
         self.assertIsInstance(storage, DBStorage)
+        self.assertEqual(1, 1)

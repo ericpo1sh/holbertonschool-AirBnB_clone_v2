@@ -52,8 +52,8 @@ class Test_City(unittest.TestCase):
         @classmethod
         def setUp(self):
             """ preparation method to be performed before each test """
-            self.city1 = City()
-            self.city2 = City()
+            self.city1 = City(name="Philly", state_id="testUUID4")
+            self.city2 = City(name="Tulsa", state_id="whatUUID4")
             self.city3 = City(**self.city1.to_dict())
             storage.save()
 
@@ -83,19 +83,15 @@ class Test_City(unittest.TestCase):
 
         def test_class_attribute_initialization(self):
             """ verifies attributes initialized with correct value & type """
-            self.assertTrue(type(self.city1.state_id) is str)
-            self.assertTrue(type(self.city1.name) is str)
-            self.assertTrue(type(self.city2.state_id) is str)
-            self.assertTrue(type(self.city2.name) is str)
-            self.assertTrue(type(self.city3.state_id) is str)
-            self.assertTrue(type(self.city3.name) is str)
-            self.assertEqual(self.city1.state_id, "")
-            self.assertEqual(self.city1.name, "")
-            self.assertEqual(self.city2.state_id, "")
-            self.assertEqual(self.city2.name, "")
-            self.assertEqual(self.city3.state_id, "")
-            self.assertEqual(self.city3.name, "")
-
-
-if __name__ == "__main__":
-    unittest.main()
+            self.assertEqual(type(self.city1.state_id), str)
+            self.assertEqual(type(self.city1.name), str)
+            self.assertEqual(type(self.city2.state_id), str)
+            self.assertEqual(type(self.city2.name), str)
+            self.assertEqual(type(self.city3.state_id), str)
+            self.assertEqual(type(self.city3.name), str)
+            self.assertEqual(self.city1.state_id, "testUUID4")
+            self.assertEqual(self.city1.name, "Philly")
+            self.assertEqual(self.city2.state_id, "whatUUID4")
+            self.assertEqual(self.city2.name, "Tulsa")
+            self.assertEqual(self.city3.state_id, "testUUID4")
+            self.assertEqual(self.city3.name, "Philly")
