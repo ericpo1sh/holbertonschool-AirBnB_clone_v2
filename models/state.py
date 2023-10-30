@@ -19,8 +19,6 @@ class State(BaseModel, Base):
             cascade="all, delete"
         )
     else:
-        name = ""
-
         @property
         def cities(self):
             """returns list of City instances upon state_id"""
