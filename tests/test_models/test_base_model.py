@@ -4,7 +4,6 @@ import os
 import unittest
 # import datetime
 import pycodestyle
-from os import getenv
 from models import storage
 from genericpath import exists
 from models.base_model import BaseModel
@@ -126,7 +125,6 @@ class TestBaseModel_str(unittest.TestCase):
         )
 
 
-@unittest.skipIf(getenv('HBNB_TYPE_STORAGE') == 'db', 'FileStorage inactive')
 class TestBaseModel_save(unittest.TestCase):
     """ BaseModel save method tests """
     @classmethod

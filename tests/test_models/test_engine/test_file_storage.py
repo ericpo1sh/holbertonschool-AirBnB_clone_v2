@@ -3,12 +3,14 @@
 import os
 import unittest
 import pycodestyle
+from os import getenv
 from models import storage
 from genericpath import exists
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
 
 
+@unittest.skipIf(getenv('HBNB_TYPE_STORAGE') == 'db', 'FileStorage inactive')
 class TestFileStorage_class(unittest.TestCase):
     """ tests FileStorage class init & formatting related operations """
     def test_doc_string(self):
@@ -46,6 +48,7 @@ class TestFileStorage_class(unittest.TestCase):
         self.assertTrue(type(storage) is FileStorage)
 
 
+@unittest.skipIf(getenv('HBNB_TYPE_STORAGE') == 'db', 'FileStorage inactive')
 class TestFileStorage_all(unittest.TestCase):
     """ tests FileStorage all method """
     @classmethod
@@ -79,6 +82,7 @@ class TestFileStorage_all(unittest.TestCase):
     #         storage.all(1)
 
 
+@unittest.skipIf(getenv('HBNB_TYPE_STORAGE') == 'db', 'FileStorage inactive')
 class TestFileStorage_new(unittest.TestCase):
     """ tests FileStorage new method """
     @classmethod
@@ -117,6 +121,7 @@ class TestFileStorage_new(unittest.TestCase):
             storage.new({2, 4, 8})
 
 
+@unittest.skipIf(getenv('HBNB_TYPE_STORAGE') == 'db', 'FileStorage inactive')
 class TestFileStorage_save(unittest.TestCase):
     """ tests FileStorage save method """
     @classmethod
@@ -152,6 +157,7 @@ class TestFileStorage_save(unittest.TestCase):
             storage.save(1)
 
 
+@unittest.skipIf(getenv('HBNB_TYPE_STORAGE') == 'db', 'FileStorage inactive')
 class TestFileStorage_reload(unittest.TestCase):
     """ tests FileStorage reload method """
     def test_reload(self):

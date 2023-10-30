@@ -9,7 +9,6 @@ class Test_DatabaseStorage(unittest.TestCase):
     def test_all(self):
         storage = DBStorage()
         self.assertIsInstance(storage, DBStorage)
-        self.assertEqual(1, 1)
 
 
 if __name__ == "__main__":
