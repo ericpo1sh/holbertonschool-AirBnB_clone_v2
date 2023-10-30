@@ -4,8 +4,6 @@ from models.base_model import BaseModel, Base
 from sqlalchemy import Column, Float, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 from os import getenv
-import models
-from models.review import Review
 
 
 class Place(BaseModel, Base):
@@ -45,8 +43,4 @@ class Place(BaseModel, Base):
         @property
         def reviews(self):
             """getter attr that returns the list of Review instances"""
-            review_list = []
-            for review in models.storage.all(Review).values():
-                if review.place_id == self.id:
-                    review_list.append(review)
-            return review_list
+            return self.reviews
