@@ -22,3 +22,7 @@ class Test_Console(unittest.TestCase):
         city_id = d.getvalue()
         print(f"state:{state_id}city:{city_id}")
         self.assertEqual(1, 1)
+
+
+if __name__ == "__main__":
+    unittest.main()
