@@ -1,6 +1,23 @@
 #!/usr/bin/python3
 """This module defines a class to manage file storage for hbnb clone"""
 import json
+from models.city import City
+from models.user import User
+from models.place import Place
+from models.state import State
+from models.review import Review
+from models.amenity import Amenity
+from models.base_model import BaseModel
+
+classes = {
+    'BaseModel': BaseModel,
+    'User': User,
+    'Place': Place,
+    'State': State,
+    'City': City,
+    'Amenity': Amenity,
+    'Review': Review
+}
 
 
 class FileStorage:
@@ -10,46 +27,32 @@ class FileStorage:
 
     def all(self, cls=None):
         """Returns a dictionary of models currently in storage"""
-        if cls:
+        if cls is not None:
+            if type(cls) is str:
+                cls = classes.get(cls)
             obj_dict = {}
-            for key, value in self.__objects.items():
-                if cls == type(value):
-                    obj_dict[key] = value
+            for val in FileStorage.__objects.values():
+                if type(val) is cls:
+                    obj_dict[f"{val.to_dict()['__class__']}.{val.id}"] = val
             return obj_dict
         else:
-            return self.__objects
+            return FileStorage.__objects
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
-        FileStorage.__objects[f"{obj.__class__.__name__}.{obj.id}"] = obj
+        self.all().update({f"{obj.to_dict()['__class__']}.{obj.id}": obj})
 
     def save(self):
         """Serialization of __objects to JSON file at __file_path location"""
-        obj_dict = {}
-        for key, value in self.__objects.items():
-            obj_dict[key] = value.to_dict()
-        with open(self.__file_path, "w") as outfile:
+        with open(FileStorage.__file_path, "w") as outfile:
+            obj_dict = {}
+            obj_dict.update(FileStorage.__objects)
+            for key, value in FileStorage.__objects.items():
+                obj_dict[key] = value.to_dict()
             json.dump(obj_dict, outfile)
 
     def reload(self):
         """Deserialization to __objects from saved JSON file, if exists"""
-        from models.city import City
-        from models.user import User
-        from models.place import Place
-        from models.state import State
-        from models.review import Review
-        from models.amenity import Amenity
-        from models.base_model import BaseModel
-
-        classes = {
-            'BaseModel': BaseModel,
-            'User': User,
-            'Place': Place,
-            'State': State,
-            'City': City,
-            'Amenity': Amenity,
-            'Review': Review
-        }
         try:
             obj_dict = {}
             with open(FileStorage.__file_path, 'r') as f:
@@ -61,10 +64,7 @@ class FileStorage:
 
     def delete(self, obj=None):
         """Deletes specified object from objects dictionary"""
-        if obj:
+        if obj is not None:
             key = f"{type(obj).__name__}.{obj.id}"
             if key in self.__objects:
                 del self.__objects[key]
-                self.save()
-        else:
-            return
