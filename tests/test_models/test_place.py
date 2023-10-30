@@ -125,3 +125,7 @@ class Test_Place(unittest.TestCase):
         self.assertEqual(self.place3.latitude, 11.11)
         self.assertEqual(self.place3.longitude, 11.11)
         self.assertEqual(self.place3.amenity_ids, ["water", "test"])
+
+
+if __name__ == "__main__":
+    unittest.main()

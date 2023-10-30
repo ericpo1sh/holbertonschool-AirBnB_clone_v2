@@ -49,3 +49,7 @@ class Test_Amenity(unittest.TestCase):
         self.assertEqual(self.amenity1.name, "test")
         self.assertEqual(self.amenity2.name, "water")
         self.assertEqual(self.amenity3.name, "test")
+
+
+if __name__ == "__main__":
+    unittest.main()

@@ -95,3 +95,7 @@ class Test_City(unittest.TestCase):
             self.assertEqual(self.city2.name, "Tulsa")
             self.assertEqual(self.city3.state_id, "testUUID4")
             self.assertEqual(self.city3.name, "Philly")
+
+
+if __name__ == "__main__":
+    unittest.main()

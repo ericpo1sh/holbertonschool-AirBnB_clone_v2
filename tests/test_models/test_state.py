@@ -50,3 +50,7 @@ class Test_State(unittest.TestCase):
             self.assertEqual(self.state1.name, "Texas")
             self.assertEqual(self.state2.name, "New Jersey")
             self.assertEqual(self.state3.name, "Texas")
+
+
+if __name__ == "__main__":
+    unittest.main()
