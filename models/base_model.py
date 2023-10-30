@@ -16,9 +16,9 @@ class BaseModel:
 
     def __init__(self, *args, **kwargs):
         """Instantiation of BaseModel object"""
-        self.id = str(uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = self.created_at
+        self.id = kwargs.get('id', str(uuid4()))
+        self.created_at = kwargs.get('created_at', datetime.now())
+        self.updated_at = kwargs.get('updated_at', self.created_at)
         if kwargs:
             for key, value in kwargs.items():
                 if key in ["created_at", "updated_at"]:
