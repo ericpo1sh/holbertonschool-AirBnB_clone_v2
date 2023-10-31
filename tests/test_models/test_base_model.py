@@ -4,10 +4,10 @@ import os
 import unittest
 # import datetime
 import pycodestyle
-from os import getenv
 from models import storage
 from genericpath import exists
 from models.base_model import BaseModel
+from models.engine.db_storage import DBStorage
 
 
 class TestBaseModel_init(unittest.TestCase):
@@ -126,25 +126,28 @@ class TestBaseModel_str(unittest.TestCase):
         )
 
 
-@unittest.skipIf(getenv('HBNB_TYPE_STORAGE') == 'db', 'FileStorage inactive')
 class TestBaseModel_save(unittest.TestCase):
     """ BaseModel save method tests """
+    @unittest.skipIf(isinstance(storage, DBStorage), 'FileStorage inactive')
     @classmethod
     def setUp(self):
         """ preparation method to be performed before each test """
         self.mod1 = BaseModel()
         self.mod1.save()
 
+    @unittest.skipIf(isinstance(storage, DBStorage), 'FileStorage inactive')
     @classmethod
     def tearDown(self):
         """ cleanup method to be performed following each test """
         del self.mod1
 
+    @unittest.skipIf(isinstance(storage, DBStorage), 'FileStorage inactive')
     def test_save_with_argument(self):
         """ verifies save method raises TypeError when argument supplied """
         with self.assertRaises(TypeError):
             self.mod1.save(1)
 
+    @unittest.skipIf(isinstance(storage, DBStorage), 'FileStorage inactive')
     def test_save(self):
         """ tests BaseModel save method correct operation """
         self.assertNotEqual(self.mod1.updated_at, self.mod1.created_at)
