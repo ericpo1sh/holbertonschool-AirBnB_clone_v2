@@ -18,6 +18,7 @@ class TestFileStorage_class(unittest.TestCase):
         self.assertTrue(len(FileStorage.new.__doc__) > 0)
         self.assertTrue(len(FileStorage.save.__doc__) > 0)
         self.assertTrue(len(FileStorage.reload.__doc__) > 0)
+        self.assertTrue(len(FileStorage.delete.__doc__) > 0)
 
     def test_pycodestyle(self):
         """ tests pycodestyle formatting standard compliance """
@@ -175,6 +176,39 @@ class TestFileStorage_reload(unittest.TestCase):
         """ verifies reload method raises TypeError upon argument supplied """
         with self.assertRaises(TypeError):
             storage.reload(1)
+
+
+class TestFileStorage_delete(unittest.TestCase):
+    """ tests FileStorage all method """
+    @classmethod
+    def setUp(self):
+        """ preparation method to be performed before each test """
+        self.obj = BaseModel()
+        self.obj.save()
+        self.goodbye = BaseModel()
+        self.goodbye.save()
+
+    @classmethod
+    def tearDown(self):
+        """ cleanup method to be performed following each test """
+        del self.obj
+        try:
+            os.remove("file.json")
+        except IOError:
+            pass
+
+    def test_delete(self):
+        """ tests correct operation """
+        before = storage.all().copy()
+        goodbye_id = f'{self.goodbye.__class__.__name__}.{self.goodbye.id}'
+        self.assertEqual(before, storage.all())
+        self.assertIn(goodbye_id, storage.all())
+        storage.delete(self.goodbye)
+        self.assertNotEqual(before, storage.all())
+        self.assertNotIn(
+            goodbye_id,
+            storage.all()
+        )
 
 
 # class Test_FileStorage(unittest.TestCase):
