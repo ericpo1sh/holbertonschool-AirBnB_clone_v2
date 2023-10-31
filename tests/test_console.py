@@ -52,7 +52,7 @@ class TestConsole_class(unittest.TestCase):
         """ tests pycodestyle formatting standard compliance """
         style = pycodestyle.StyleGuide(quiet=True)
         self.assertEqual(
-            style.check_files(['models/engine/file_storage.py']).total_errors,
+            style.check_files(['console.py']).total_errors,
             0,
             "Found code style errors (and warnings)."
         )
