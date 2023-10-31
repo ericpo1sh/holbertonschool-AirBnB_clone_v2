@@ -356,6 +356,7 @@ class HBNBCommand(cmd.Cmd):
 
 
 def signal_thing(sig, frame):
+    """ defined behavior upon CTRL^C input """
     print('\nWHERE ARE YOU GOING? ;_;\n(hbnb) ', end='')
     return
 

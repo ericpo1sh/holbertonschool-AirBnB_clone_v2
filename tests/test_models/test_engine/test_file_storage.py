@@ -198,7 +198,7 @@ class TestFileStorage_delete(unittest.TestCase):
             pass
 
     def test_delete(self):
-        """ tests correct operation """
+        """ tests delete method correct operation """
         before = storage.all().copy()
         goodbye_id = f'{self.goodbye.__class__.__name__}.{self.goodbye.id}'
         self.assertEqual(before, storage.all())
