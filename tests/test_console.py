@@ -1,7 +1,5 @@
 #!/usr/bin/python3
 """ console tests """
-# import io
-# import sys
 import unittest
 import pycodestyle
 from console import HBNBCommand, signal_thing
@@ -48,21 +46,7 @@ class TestConsole_class(unittest.TestCase):
         """ verifies that type returns correct object type """
         konsol = HBNBCommand()
         self.assertEqual(type(konsol), HBNBCommand)
-
-
-# class TestConsole(unittest.TestCase):
-#     """ tests for console """
-#     def test_create_instance(self):
-#         """ """
-#         output = io.StringIO()
-#         sys.stdout = output
-#         console = HBNBCommand()
-#         console.onecmd(
-#             "create User email=\"test\" password=\"kittycat\" id=\"12\""
-#         )
-#         sys.stdout = sys.__stdout__
-#         expected_output = output.getvalue()
-#         self.assertIn('12', expected_output)
+        self.assertTrue(isinstance(konsol, HBNBCommand))
 
 
 if __name__ == "__main__":

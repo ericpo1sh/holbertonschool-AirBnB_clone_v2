@@ -5,6 +5,7 @@ import unittest
 import pycodestyle
 from models import storage
 from models.review import Review
+from models.base_model import BaseModel, Base
 
 
 class Test_Review(unittest.TestCase):
@@ -68,6 +69,13 @@ class Test_Review(unittest.TestCase):
         self.assertEqual(self.review3.place_id, "thingyUUID4")
         self.assertEqual(self.review3.user_id, "bigboiUUID4")
         self.assertEqual(self.review3.text, "review text")
+
+    def test_type_subclass(self):
+        """ tests correct type/subclass heirarchy """
+        self.assertEqual(type(self.review1), Review)
+        self.assertTrue(isinstance(self.review1, Review))
+        self.assertTrue(issubclass(self.review1.__class__, BaseModel))
+        self.assertTrue(issubclass(self.review1.__class__, Base))
 
 
 if __name__ == "__main__":

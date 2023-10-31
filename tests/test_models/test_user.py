@@ -5,6 +5,7 @@ import unittest
 import pycodestyle
 from models import storage
 from models.user import User
+from models.base_model import BaseModel, Base
 
 
 class Test_User(unittest.TestCase):
@@ -77,6 +78,13 @@ class Test_User(unittest.TestCase):
         self.assertEqual(self.usr3.password, "pwd")
         self.assertEqual(self.usr3.first_name, "James")
         self.assertEqual(self.usr3.last_name, "Franco")
+
+    def test_type_subclass(self):
+        """ tests correct type/subclass heirarchy """
+        self.assertEqual(type(self.usr1), User)
+        self.assertTrue(isinstance(self.usr1, User))
+        self.assertTrue(issubclass(self.usr1.__class__, BaseModel))
+        self.assertTrue(issubclass(self.usr1.__class__, Base))
 
 
 if __name__ == "__main__":

@@ -5,6 +5,7 @@ import unittest
 import pycodestyle
 from models import storage
 from models.amenity import Amenity
+from models.base_model import BaseModel, Base
 
 
 class Test_Amenity(unittest.TestCase):
@@ -49,6 +50,13 @@ class Test_Amenity(unittest.TestCase):
         self.assertEqual(self.amenity1.name, "test")
         self.assertEqual(self.amenity2.name, "water")
         self.assertEqual(self.amenity3.name, "test")
+
+    def test_type_subclass(self):
+        """ tests correct type/subclass heirarchy """
+        self.assertEqual(type(self.amenity1), Amenity)
+        self.assertTrue(isinstance(self.amenity1, Amenity))
+        self.assertTrue(issubclass(self.amenity1.__class__, BaseModel))
+        self.assertTrue(issubclass(self.amenity1.__class__, Base))
 
 
 if __name__ == "__main__":

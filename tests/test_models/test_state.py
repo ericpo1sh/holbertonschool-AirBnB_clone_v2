@@ -5,6 +5,7 @@ import unittest
 import pycodestyle
 from models import storage
 from models.state import State
+from models.base_model import BaseModel, Base
 
 
 class Test_State(unittest.TestCase):
@@ -49,6 +50,13 @@ class Test_State(unittest.TestCase):
         self.assertEqual(self.state1.name, "Texas")
         self.assertEqual(self.state2.name, "New Jersey")
         self.assertEqual(self.state3.name, "Texas")
+
+    def test_type_subclass(self):
+        """ tests correct type/subclass heirarchy """
+        self.assertEqual(type(self.state1), State)
+        self.assertTrue(isinstance(self.state1, State))
+        self.assertTrue(issubclass(self.state1.__class__, BaseModel))
+        self.assertTrue(issubclass(self.state1.__class__, Base))
 
 
 if __name__ == "__main__":

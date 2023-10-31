@@ -5,6 +5,7 @@ import unittest
 import pycodestyle
 from models import storage
 from models.place import Place
+from models.base_model import BaseModel, Base
 
 
 class Test_Place(unittest.TestCase):
@@ -125,6 +126,13 @@ class Test_Place(unittest.TestCase):
         self.assertEqual(self.place3.latitude, 11.11)
         self.assertEqual(self.place3.longitude, 11.11)
         self.assertEqual(self.place3.amenity_ids, ["water", "test"])
+
+    def test_type_subclass(self):
+        """ tests correct type/subclass heirarchy """
+        self.assertEqual(type(self.place1), Place)
+        self.assertTrue(isinstance(self.place1, Place))
+        self.assertTrue(issubclass(self.place1.__class__, BaseModel))
+        self.assertTrue(issubclass(self.place1.__class__, Base))
 
 
 if __name__ == "__main__":
