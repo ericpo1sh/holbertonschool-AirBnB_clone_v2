@@ -4,7 +4,6 @@ import io
 import sys
 import unittest
 import pycodestyle
-from cmd import Cmd
 from console import HBNBCommand, signal_thing
 
 
