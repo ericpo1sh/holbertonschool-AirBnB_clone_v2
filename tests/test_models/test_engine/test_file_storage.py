@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" Module for testing file storage"""
+""" Module for testing file storage """
 import os
 import unittest
 import pycodestyle

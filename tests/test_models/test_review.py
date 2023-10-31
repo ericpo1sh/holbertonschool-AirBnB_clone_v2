@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" """
+""" review tests """
 import os
 import unittest
 import pycodestyle
@@ -8,7 +8,7 @@ from models.review import Review
 
 
 class Test_Review(unittest.TestCase):
-    """ """
+    """ tests for Review subclass of BaseModel """
     @classmethod
     def setUp(self):
         """ preparation method to be performed before each test """

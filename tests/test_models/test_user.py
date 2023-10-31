@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" """
+""" user tests """
 import os
 import unittest
 import pycodestyle
@@ -8,7 +8,7 @@ from models.user import User
 
 
 class Test_User(unittest.TestCase):
-    """ """
+    """ tests for User subclass of BaseModel """
     @classmethod
     def setUp(self):
         """ preparation method to be performed before each test """

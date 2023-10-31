@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" """
+""" amenity tests """
 import os
 import unittest
 import pycodestyle
@@ -8,7 +8,7 @@ from models.amenity import Amenity
 
 
 class Test_Amenity(unittest.TestCase):
-    """ """
+    """ tests for Amenity subclass of BaseModel """
     @classmethod
     def setUp(self):
         """ preparation method to be performed before each test """

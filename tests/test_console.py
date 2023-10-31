@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" """
+""" console tests """
 # import io
 # import sys
 import unittest

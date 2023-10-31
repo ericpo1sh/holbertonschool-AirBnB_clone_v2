@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" """
+""" state tests """
 import os
 import unittest
 import pycodestyle
@@ -8,7 +8,7 @@ from models.state import State
 
 
 class Test_State(unittest.TestCase):
-    """ """
+    """ tests for State subclass of BaseModel """
     @classmethod
     def setUp(self):
         """ preparation method to be performed before each test """

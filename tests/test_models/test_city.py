@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" """
+""" city tests """
 import os
 import unittest
 import pycodestyle
@@ -8,7 +8,7 @@ from models.city import City
 
 
 class Test_City(unittest.TestCase):
-    """ """
+    """ tests for City subclass of BaseModel """
     @classmethod
     def setUp(self):
         """ preparation method to be performed before each test """

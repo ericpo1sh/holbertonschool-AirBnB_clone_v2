@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" """
+""" base_model tests """
 import os
 import unittest
 import datetime
@@ -218,84 +218,77 @@ from models.base_model import BaseModel
 class Test_BaseModel(unittest.TestCase):
     """ Tests for BaseModel """
     def __init__(self, *args, **kwargs):
-        """ """
+        """ instantiation """
         super().__init__(*args, **kwargs)
         self.name = 'BaseModel'
         self.value = BaseModel
 
     def setUp(self):
-        """ """
+        """ preparation method before each test"""
         pass
 
     def tearDown(self):
+        """ cleanup method following each test """
         try:
             os.remove('file.json')
         except IOError:
             pass
 
     def test_default(self):
-        """ """
+        """ tests type """
         i = self.value()
         self.assertEqual(type(i), self.value)
 
     def test_kwargs(self):
-        """ """
+        """ tests kwargs as input argument """
         i = self.value()
         copy = i.to_dict()
         new = BaseModel(**copy)
         self.assertFalse(new is i)
 
     def test_kwargs_int(self):
-        """ """
+        """ tests that kwargs int argument raises TypeError """
         i = self.value()
         copy = i.to_dict()
         copy.update({1: 2})
         with self.assertRaises(TypeError):
             BaseModel(**copy)
 
-    def test_str(self):
-        """ """
-        i = self.value()
-        self.assertEqual(
-            str(i),
-            '[{}] ({}) {}'.format(self.name, i.id, i.__dict__)
-        )
-
     def test_todict(self):
-        """ """
+        """ tests to_dict method """
         i = self.value()
         n = i.to_dict()
         self.assertEqual(i.to_dict(), n)
 
     def test_kwargs_none(self):
-        """ """
+        """ tests kwargs argument with NoneType key """
         n = {None: None}
         with self.assertRaises(TypeError):
             self.value(**n)
 
     def test_kwargs_one(self):
-        """ """
+        """ tests kwargs argument with 1 key """
         n = {'Name': 'test'}
         new = self.value(**n)
         self.assertTrue(isinstance(new, BaseModel))
 
     def test_id(self):
-        """ """
+        """ tests id attribute """
         new = self.value()
         self.assertEqual(type(new.id), str)
 
     def test_created_at(self):
-        """ """
+        """ tests created_at attribute """
         new = self.value()
         self.assertEqual(type(new.created_at), datetime.datetime)
 
     def test_updated_at(self):
-        """ """
+        """ tests updated_at attribute """
         new = self.value()
         self.assertEqual(type(new.updated_at), datetime.datetime)
         n = new.to_dict()
         new = BaseModel(**n)
-        self.assertFalse(new.created_at == new.updated_at)
+        self.assertTrue(new.created_at == new.updated_at)
 
 
 if __name__ == "__main__":

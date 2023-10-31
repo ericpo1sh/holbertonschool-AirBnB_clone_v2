@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" """
+""" place tests """
 import os
 import unittest
 import pycodestyle
@@ -8,7 +8,7 @@ from models.place import Place
 
 
 class Test_Place(unittest.TestCase):
-    """ """
+    """ tests for Place subclass of BaseModel """
     @classmethod
     def setUp(self):
         """ preparation method to be performed before each test """
