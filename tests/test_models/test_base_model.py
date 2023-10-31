@@ -126,9 +126,7 @@ class TestBaseModel_str(unittest.TestCase):
         )
 
 
-@unittest.skipIf(
-    os.getenv('HBNB_TYPE_STORAGE') == 'db', 'FileStorage inactive'
-)
+@unittest.skipIf(os.getenv("HBNB_ENV") is not None, 'FileStorage inactive')
 class TestBaseModel_save(unittest.TestCase):
     """ BaseModel save method tests """
     @classmethod
@@ -216,9 +214,7 @@ class TestBaseModel_to_dict(unittest.TestCase):
         self.assertEqual(self.mod1_dict['id'], self.mod1.id)
 
 
-@unittest.skipIf(
-    os.getenv('HBNB_TYPE_STORAGE') == 'db', 'FileStorage inactive'
-)
+@unittest.skipIf(os.getenv("HBNB_ENV") is not None, 'FileStorage inactive')
 class TestBaseModel_delete(unittest. TestCase):
     """ BaseModel delete tests """
     @classmethod
