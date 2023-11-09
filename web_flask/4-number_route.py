@@ -29,7 +29,7 @@ def python(text='is cool'):
     """ function that returns Python + value of text input """
     return "Python {}".format(text.replace('_', " "))
 
-@app.route('/number', strict_slashes=False)
+
 @app.route('/number/<int:n>', strict_slashes=False)
 def n_is_a_number(n):
     """ checks if n is int, returns text if n is a integer """
