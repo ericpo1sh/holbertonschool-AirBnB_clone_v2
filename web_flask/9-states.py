@@ -56,11 +56,27 @@ def state_list():
     return render_template('7-states_list.html', states=states)
 
 
-@app.route('/cities_by_states')
+@app.route('/cities_by_states', strict_slashes=False)
 def cities_by_states():
     """ Function that returns the html page of """
     states = storage.all('State')
     return render_template('8-cities_by_states.html', states=states)
+
+
+@app.route('/states', strict_slashes=False)
+def states():
+    """ Functions that returns list of states """
+    states = storage.all('State')
+    return render_template('9-states.html', states=states)
+
+
+@app.route('/states/<id>', strict_slashes=False)
+def states_id(id):
+    """Fuction that iterates through storage to find cities with matching ID"""
+    for state in storage.all('State').values():
+        if state.id == id:
+            return render_template('9-states.html', state=state)
+        return render_template('9-states.py')
 
 
 @app.teardown_appcontext
