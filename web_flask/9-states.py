@@ -67,7 +67,7 @@ def cities_by_states():
 def states():
     """ Functions that returns list of states """
     states = storage.all('State')
-    return render_template('9-states.py', states=states)
+    return render_template('8-cities_by_states.html', states=states)
 
 
 @app.route('/states/<id>', strict_slashes=False)
