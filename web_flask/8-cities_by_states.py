@@ -56,7 +56,7 @@ def state_list():
     return render_template('7-states_list.html', states=states)
 
 
-@app.route('/cities_by_states')
+@app.route('/cities_by_states', strict_slashes=False)
 def cities_by_states():
     """ Function that returns the html page of """
     states = storage.all('State')
